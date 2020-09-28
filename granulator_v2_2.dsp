@@ -1,5 +1,5 @@
 // USER INTERFACE //
-volumeSlider = hslider("Volume", 0, 0, 1, 0.01); // volume slider
+volumeSlider = hslider("Volume", 0.5, 0, 1, 0.01); // volume slider
 grainbufferSizeSlider = hslider("Grain Size", 1000, 1000, 10000, 1); // grain size in samples
 delayLengthSlider = hslider("Delay Length", 1000, 1000, 10000, 1); // delay length in samples
 pitchSlider = hslider("Pitch", 1, 0.1, 2, 0.1); // pitch control/ downsampling
@@ -10,7 +10,7 @@ N = 1; // numbers of grains
 Volume = volumeSlider;
 
 bufferSize = SR; // size of input buffer in samples
-bufferCounter = + (1) % bufferSize ~ _; // counter to cycle through the input buffer from 0 to bufferSize
+bufferCounter = + (1) % delayLength ~ _; // counter to cycle through the input buffer from 0 to bufferSize
 delayLength = delayLengthSlider; // set delay length with delay length slider
 
 grainbufferSize = grainbufferSizeSlider; // size of grainbuffer in samples
