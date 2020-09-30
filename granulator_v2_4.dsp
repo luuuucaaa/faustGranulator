@@ -3,7 +3,7 @@
 volumeSlider = hslider("Volume", 0.5, 0, 1, 0.01); // volume slider
 grainbufferSizeSlider = hslider("Grain Size", 0.1, 0.01, 0.5, 0.01); // grain size in samples
 delayLengthSlider = hslider("Delay Length", 2, 0.5, 2, 0.1); // delay length in samples
-pitchSlider = hslider("Pitch", 1, 0.1, 2, 0.1); // pitch control / downsampling
+pitchSlider = hslider("Pitch", 1, 0.1, 2, 0.01); // pitch control / downsampling
 
 // CODE //
 
@@ -21,10 +21,8 @@ grainbufferCounter = + (pitchSlider) % grainbufferSize ~ _; // counter to cycle 
 SH(trigger, signal) = ( * (1 - trigger) + signal * trigger) ~ _; // sample and hold function definiton for grain offset
 grainOffset(i) = int(SH(1 - 1', int(delayLength * noise(i)))); // delay length between grainbuffer refresh
 grainCounter(i) = (grainbufferCounter + grainOffset(i)) % grainbufferSize; // grain-specific grain counter
-grainRandomStartPos(i) = int(SH(int(grainCounter(i) / (grainbufferSize - 1)), int(delayLength * noise(i)))); 
-grainPosition(i) = grainCounter(i) + grainRandomStartPos(i);
-
-
+grainRandomStartPos(i) = int(SH(int(grainCounter(i) / (grainbufferSize - 1)), int(delayLength * noise(i)))); // individual random startingposition for each grain
+grainPosition(i) = grainCounter(i) + grainRandomStartPos(i); // 
 
 buffer(writeIndex, readIndex, signal) = rwtable(bufferSize, 0.0, int(writeIndex % delayLength), signal, int(readIndex % delayLength)); // function definition of cycling buffer
 
@@ -49,4 +47,4 @@ noise(i) = (noiseChan(N + 1, i) + 1) / 2; //to get nth channel of multi-channel 
 
 // PROCESS //
 
-process = _ <: par(i, N, buffer(int(bufferCounter), int(grainPosition(i)), _) * window(i) * Volume * (i < N) / N) :> _, _;
+process = _ <: par(i, N, buffer(int(bufferCounter), int(grainPosition(i)), _) * window(i) * Volume);// * (i < N) / N);// :> _, _;
