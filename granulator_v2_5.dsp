@@ -3,7 +3,7 @@
 volumeSlider = vslider("h:/h:Granulator/ [0]Volume", 0.5, 0, 1, 0.01); // volume slider
 grainbufferSizeSlider = vslider("h:/h:Grain/ [1]Size", 0.1, 0.01, 0.5, 0.01); // grain size in samples
 delayLengthSlider = vslider("h:/h:Grain/ [2]Delay", 2, 0.5, 2, 0.1); // delay length in samples
-pitchSlider = vslider("h:/h:Grain/ [3] Pitch", 1, -2, 2, 0.1); // pitch control (downsampling)
+pitchSlider = vslider("h:/h:Grain/ [3] Pitch", 1, -2, 2, 0.01); // pitch control (downsampling)
 grainAmountSlider =  vslider("h:/h:Grain/ [4] Density", 1, 1, MAXN, 1); // number of grains
 
 // CODE //
